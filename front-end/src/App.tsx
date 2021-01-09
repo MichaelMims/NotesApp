@@ -13,6 +13,7 @@ import {
 import Form from './components/Form'
 import List from './components/List'
 import { GetANote, GetAllNotes, NoteType, FormProp, NoteListProp } from './utils/utils'
+import dotenv from 'dotenv'
 
 const AppContainer = styled.div`
 display: flex;
@@ -42,6 +43,10 @@ function App() {
   const history = useHistory()
 
   useEffect(() => {
+    if (process.env.REACT_APP_API_BASE_URL) { 
+      axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL
+    }
+    
     updateNotesList()
   }, [])
 
