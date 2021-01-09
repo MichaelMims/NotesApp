@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const GetAllNotes = () => {
     return axios
-        .get('/notes')
+        .get(`${process.env.REACT_APP_API_BASE_URL}/notes`)
         .then((res) => {
             return Promise.resolve(res.data.notes)
         })
@@ -13,7 +13,7 @@ export const GetAllNotes = () => {
 
 export const GetANote = (_id: String) => {
     return axios
-        .get(`/notes/${_id}`)
+        .get(`${process.env.REACT_APP_API_BASE_URL}/notes/${_id}`)
         .then((res) => {
             return Promise.resolve(res.data.note)
         })
