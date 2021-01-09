@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import notesRoutes, { connect } from './routes/notes'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import morgan from 'morgan'
 
 dotenv.config()
 
@@ -28,6 +29,7 @@ function CorsMiddleware(req: any, res: any, next: any) {
 }
 
 function startServer() {
+    app.use(morgan('combined'))
     app.use(CorsMiddleware)
 
     app.use(bodyParser.urlencoded({ extended: false }));
