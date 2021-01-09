@@ -31,7 +31,7 @@ if (process.env.MONGOOSE_ADDRESS) {
     //         console.log(err)
     //     })
 } else {
-    console.log('Could not connect to database')
+    console.log('No Mongo Address has been found in .env')
 }
 
 function startServer() {
