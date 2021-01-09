@@ -48,7 +48,12 @@ function App() {
   let updateNotesList = () => {
     GetAllNotes()
       .then((notes) => {
-        setNotesList(notes)
+        if (notes) {
+          setNotesList(notes)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 
