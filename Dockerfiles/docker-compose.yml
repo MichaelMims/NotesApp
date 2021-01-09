@@ -1,0 +1,43 @@
+services:
+  mongodb:
+    build: ./MongoDb_Debian
+    volumes:
+      - ./MongoDb_Debian/data/db:/data/db
+    hostname: mongodb
+    expose: 
+      - 27017
+    container_name: MongoDB
+    networks: 
+      - notes-network
+  
+  express:
+    build: ./Notes_Express
+    environment: 
+      - MONGOOSE_ADDRESS=mongodb://mongodb:27017/notes
+      - PORT=3000
+    hostname: express
+    expose: 
+      - 3000
+    container_name: Express
+    networks: 
+      - notes-network
+    depends_on:
+      - "mongodb"
+    
+  react:
+    build: ./Notes_React
+    ports:
+      - "5000:5000"
+    environment:
+      - REACT_APP_BASE_URL=express:3000
+    container_name: React
+    networks: 
+      - notes-network
+    depends_on:
+      - "express"
+
+
+
+networks:
+  notes-network:
+    driver: bridge

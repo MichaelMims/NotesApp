@@ -9,6 +9,6 @@ RUN apt-get update && apt-get install -y mongodb-org && rm -rf /var/lib/apt/list
 
 VOLUME /data/db
 
-EXPOSE 27017
+# EXPOSE 27017
 
 CMD /usr/bin/mongod --bind_ip 0.0.0.0

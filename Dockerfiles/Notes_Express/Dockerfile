@@ -11,6 +11,6 @@ RUN cp -r back-end /app
 
 RUN cd /app/back-end && npm install
 
-EXPOSE 3000
+# EXPOSE 3000
 WORKDIR /app/back-end/
 CMD npm run start
