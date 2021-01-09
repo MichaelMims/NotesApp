@@ -11,46 +11,30 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 if (process.env.MONGOOSE_ADDRESS) {
-
     connectWithRetry(process.env.MONGOOSE_ADDRESS)
-    
-    // var db = mongoose.createConnection(process.env.MONGOOSE_ADDRESS, {})
-    // db.on('error', () => {
-
-    //     console.error('Attempting connection to database')
-    // });
-
-    // db.once('open', () => {
-    //     startServer()
-    // })
-    // mongoose.connect(process.env.MONGOOSE_ADDRESS, { useNewUrlParser: true })
-    //     .then((res) => {
-    //         startServer()
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
 } else {
     console.log('No Mongo Address has been found in .env')
 }
 
 function CorsMiddleware(req: any, res: any, next: any) {
-    res.setHeader('Access-Control-Allow-Origin', process.env.CORSHEADER || "");
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+    const origin = req.get('origin')
+
+    res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma')
+    console.log(res)
     next()
 }
 
 function startServer() {
-    // app.use(cors())
     app.use(CorsMiddleware)
 
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json())
 
     app.use('/check', (req, res, next) => {
-        res.status(200).json({
+        res.sendStatus(200).json({
             msg: 'site is working'
         })
     })
