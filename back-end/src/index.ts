@@ -34,12 +34,26 @@ if (process.env.MONGOOSE_ADDRESS) {
     console.log('No Mongo Address has been found in .env')
 }
 
+function CorsMiddleware(req: any, res: any, next: any) {
+    res.setHeader('Access-Control-Allow-Origin', process.env.CORSHEADER || "");
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    next()
+}
+
 function startServer() {
-    app.use(cors())
+    // app.use(cors())
+    app.use(CorsMiddleware)
 
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json())
 
+    app.use('/check', (req, res, next) => {
+        res.status(200).json({
+            msg: 'site is working'
+        })
+    })
     app.use('/notes', notesRoutes)
 
     app.listen(PORT, () => {
