@@ -8,8 +8,13 @@ import morgan from 'morgan'
 
 dotenv.config()
 
-const app = express()
+const app = express();
 const PORT = process.env.PORT || 3001
+app.use(cors())
+app.use(morgan('combined'))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+
 
 if (process.env.MONGOOSE_ADDRESS) {
     connectWithRetry(process.env.MONGOOSE_ADDRESS)
@@ -20,7 +25,7 @@ if (process.env.MONGOOSE_ADDRESS) {
 function CorsMiddleware(req: any, res: any, next: any) {
     const origin = req.get('origin')
 
-    res.setHeader('Access-Control-Allow-Origin', process.env.CORSHEADER || "");
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', true)
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma')
@@ -29,12 +34,7 @@ function CorsMiddleware(req: any, res: any, next: any) {
 }
 
 function startServer() {
-    app.use(morgan('combined'))
-    app.use(CorsMiddleware)
-
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json())
-
+    // app.use(CorsMiddleware)
     app.use('/check', (req, res, next) => {
         res.sendStatus(200).json({
             msg: 'site is working'
