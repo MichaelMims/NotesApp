@@ -36,7 +36,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - REACT_APP_API_BASE_URL=http://172.29.1.2:3000
+      - REACT_APP_API_BASE_URL=http://localhost:3000
     container_name: React
     networks: 
       notes-network:
