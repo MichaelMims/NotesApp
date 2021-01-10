@@ -47,25 +47,28 @@ function Form({ onSubmit, onPatch, onDelete }: FormProp) {
   let match: any = useRouteMatch();
   let noteId = match.params.noteId
 
+  // console.log(noteId)
+
   useEffect(() => {
     if (noteId) {
       axios
         .get(`/notes/${noteId}`)
         .then((res) => {
+          // console.log(res.data.note)
           setNoteValues(res.data.note)
         })
         .catch((err) => {
-
         })
-
     } else {
       setNoteValues({ _id: -1, title: "", content: "" })
     }
-  }, [noteId])
+  }, [noteId, onSubmit, onPatch])
 
   let onHandleSubmit = (e: react.FormEvent) => {
     e.preventDefault();
-    onSubmit(e)
+    if(onSubmit) {
+      onSubmit(e)
+    }
     history.push('/')
   }
 

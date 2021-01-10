@@ -151,7 +151,7 @@ return (
             <Form config={{ type: "create" }} onSubmit={onSubmitPost} />
           </Route>
           <Route path="/note/:noteId">
-            <Form config={{ type: "update" }} onSubmit={onSubmitPost} onDelete={onSubmitDelete} onPatch={onSubmitPatch} />
+            <Form config={{ type: "update" }} onDelete={onSubmitDelete} onPatch={onSubmitPatch} />
             {/* <FormComp config={{type: "update", defaultValue: {title: }}} */}
           </Route>
           <Route path="/">

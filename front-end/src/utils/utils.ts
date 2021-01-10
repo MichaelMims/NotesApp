@@ -32,7 +32,7 @@ export type FormProp = {
         type: "create" | "update",
         _id?: String
     },
-    onSubmit: (e: any) => void,
+    onSubmit?: (e: any) => void,
     onDelete?: (e: any) => void,
     onPatch?: (e: any, noteId: any) => void
 }
