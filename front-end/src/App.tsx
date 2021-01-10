@@ -44,9 +44,7 @@ function App() {
 
   useEffect(() => {
     if (process.env.REACT_APP_API_BASE_URL) { 
-      console.log(process.env.REACT_APP_API_BASE_URL)
-      // axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL
-      // console.log(process.env.REACT_APP_API_BASE_URL)
+      axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL
     }
     
     updateNotesList()
@@ -78,7 +76,7 @@ function App() {
     const title = e.currentTarget.title.value
     const content = e.currentTarget.content.value
     axios.post(
-      `${process.env.REACT_APP_API_BASE_URL}/notes`,
+      `/notes`,
       {
         title: title,
         content: content
@@ -99,7 +97,7 @@ function App() {
     const content = e.currentTarget.content.value
     axios
       .patch(
-        `${process.env.REACT_APP_API_BASE_URL}/notes/${noteId}`,
+        `/notes/${noteId}`,
         {
           title: title,
           content: content
@@ -119,7 +117,7 @@ function App() {
     console.log(e.target.value)
     axios
       .delete(
-        `${process.env.REACT_APP_API_BASE_URL}/notes/${e.target.value}`
+        `/notes/${e.target.value}`
       )
       .then((res) => {
         if (res.status === 200) {
